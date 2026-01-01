@@ -1,5 +1,5 @@
 /* ============================================
-   SponsorLink - JavaScript
+   college.connect - JavaScript
    College Club Sponsorship Platform
    ============================================ */
 
@@ -7,7 +7,7 @@
 // DATA MANAGEMENT
 // ============================================
 
-const STORAGE_KEY = 'sponsorlink_events';
+const STORAGE_KEY = 'college_connect_events';
 
 // Initial dummy data
 const initialEvents = [
@@ -71,7 +71,6 @@ function getEvents() {
   if (stored) {
     return JSON.parse(stored);
   }
-  // Initialize with dummy data
   localStorage.setItem(STORAGE_KEY, JSON.stringify(initialEvents));
   return initialEvents;
 }
@@ -127,6 +126,7 @@ function getStats() {
     totalFundsRaised: events.reduce((sum, e) => sum + e.sponsorshipRaised, 0),
   };
 }
+
 
 // ============================================
 // ICONS (SVG strings)
@@ -612,3 +612,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
