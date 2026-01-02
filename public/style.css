@@ -1525,6 +1525,46 @@ img {
   gap: 0.75rem;
   margin-top: 1.5rem;
 }
+/* ============================================
+   INTERESTED SECTION - For Sponsor Modal
+   ============================================ */
+.interested-section {
+  margin: 1.5rem 0;
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+}
+
+#interested-btn {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+#interested-btn.active {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.interested-form {
+  background-color: hsla(220, 15%, 92%, 0.3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-top: 1rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.interested-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.interested-form .form-group:last-child {
+  margin-bottom: 0;
+}
+
+.interested-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
 
 /* Toast Notifications */
 .toast-container {
@@ -1768,4 +1808,5 @@ img {
     padding: 1rem 1.5rem 1.5rem;
   }
 }
+
 
