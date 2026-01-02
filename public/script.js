@@ -126,6 +126,72 @@ function getStats() {
     totalFundsRaised: events.reduce((sum, e) => sum + e.sponsorshipRaised, 0),
   };
 }
+// Toggle interested form visibility
+function toggleInterestedForm() {
+  const form = document.getElementById('interested-form');
+  const btn = document.getElementById('interested-btn');
+  
+  if (form.style.display === 'none' || form.style.display === '') {
+    form.style.display = 'block';
+    btn.textContent = 'Hide Form';
+    btn.classList.add('active');
+  } else {
+    form.style.display = 'none';
+    btn.textContent = 'Interested - Connect First';
+    btn.classList.remove('active');
+  }
+}
+
+// Submit interest form
+function submitInterest() {
+  const name = document.getElementById('sponsor-name').value.trim();
+  const email = document.getElementById('sponsor-email').value.trim();
+  const message = document.getElementById('sponsor-message').value.trim();
+  const eventName = document.getElementById('modal-event-name').textContent;
+  
+  // Validation
+  if (!name) {
+    alert('Please enter your name');
+    return;
+  }
+  
+  if (!email) {
+    alert('Please enter your email address');
+    return;
+  }
+  
+  if (!message) {
+    alert('Please enter a message for the club');
+    return;
+  }
+  
+  // In a real app, this would send data to backend
+  console.log('Interest submitted:', {
+    name,
+    email,
+    message,
+    eventName,
+    timestamp: new Date().toISOString()
+  });
+  
+  // Show success message
+  alert(`Thank you ${name}! Your interest has been sent to the club. They will contact you at ${email} shortly.`);
+  
+  // Reset form and close
+  document.getElementById('sponsor-name').value = '';
+  document.getElementById('sponsor-email').value = '';
+  document.getElementById('sponsor-message').value = '';
+  toggleInterestedForm(); // Hide form
+}
+
+// Add this to closeSponsorModal function to reset the form when modal closes
+function closeSponsorModal() {
+  document.getElementById('sponsor-modal').style.display = 'none';
+  // Reset interested form
+  document.getElementById('interested-form').style.display = 'none';
+  document.getElementById('interested-btn').textContent = 'Interested - Connect First';
+  document.getElementById('interested-btn').classList.remove('active');
+}
 
 
 // ============================================
@@ -612,4 +678,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
 
