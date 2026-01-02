@@ -74,36 +74,63 @@
   </main>
 
   <!-- Sponsor Modal -->
-  <div class="modal-overlay" id="sponsor-modal">
-    <div class="modal">
-      <div class="modal-header">
-        <h3 class="modal-title" id="modal-event-name">Sponsor Event</h3>
-        <p class="modal-description" id="modal-club-name">Support this club by contributing to their event.</p>
+  <!-- Sponsor Modal -->
+<div class="modal-overlay" id="sponsor-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modal-event-name">Sponsor Event</h3>
+      <p class="modal-description" id="modal-club-name">Support this club by contributing to their event.</p>
+    </div>
+    <div class="modal-body">
+      <div class="modal-info">
+        <div class="modal-info-row">
+          <span class="modal-info-label">Goal</span>
+          <span class="modal-info-value" id="modal-goal">$0</span>
+        </div>
+        <div class="modal-info-row">
+          <span class="modal-info-label">Raised</span>
+          <span class="modal-info-value success" id="modal-raised">$0</span>
+        </div>
       </div>
-      <div class="modal-body">
-        <div class="modal-info">
-          <div class="modal-info-row">
-            <span class="modal-info-label">Goal</span>
-            <span class="modal-info-value" id="modal-goal">$0</span>
-          </div>
-          <div class="modal-info-row">
-            <span class="modal-info-label">Raised</span>
-            <span class="modal-info-value success" id="modal-raised">$0</span>
-          </div>
-        </div>
+      
+      <div class="form-group">
+        <label class="form-label" for="sponsor-amount">Sponsorship Amount ($)</label>
+        <input type="number" class="form-input" id="sponsor-amount" placeholder="Enter amount">
+      </div>
+      
+      <!-- Interested Button Section -->
+      <div class="interested-section">
+        <button class="btn btn-secondary" id="interested-btn" onclick="toggleInterestedForm()">
+          Interested - Connect First
+        </button>
         
-        <div class="form-group">
-          <label class="form-label" for="sponsor-amount">Sponsorship Amount ($)</label>
-          <input type="number" class="form-input" id="sponsor-amount" placeholder="Enter amount">
+        <div class="interested-form" id="interested-form" style="display: none;">
+          <div class="form-group">
+            <label class="form-label" for="sponsor-name">Your Name</label>
+            <input type="text" class="form-input" id="sponsor-name" placeholder="Enter your name">
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="sponsor-email">Email Address</label>
+            <input type="email" class="form-input" id="sponsor-email" placeholder="Enter your email">
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="sponsor-message">Message to Club</label>
+            <textarea class="form-input" id="sponsor-message" placeholder="Tell the club about your interest..." rows="3"></textarea>
+          </div>
+          
+          <button class="btn btn-primary" onclick="submitInterest()">Send Connection Request</button>
         </div>
-        
-        <div class="modal-actions">
-          <button class="btn btn-secondary" style="flex: 1;" onclick="closeSponsorModal()">Cancel</button>
-          <button class="btn btn-accent" style="flex: 1;" onclick="confirmSponsorship()">Confirm Sponsorship</button>
-        </div>
+      </div>
+      
+      <div class="modal-actions">
+        <button class="btn btn-secondary" style="flex: 1;" onclick="closeSponsorModal()">Cancel</button>
+        <button class="btn btn-accent" style="flex: 1;" onclick="confirmSponsorship()">Confirm Sponsorship</button>
       </div>
     </div>
   </div>
+</div>
 
   <!-- Footer -->
   <footer class="footer">
@@ -156,4 +183,5 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
