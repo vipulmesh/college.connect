@@ -7,7 +7,7 @@
 // DATA MANAGEMENT
 // ============================================
 
-const STORAGE_KEY = 'sponsorlink_events';
+const STORAGE_KEY = 'College.connect_events';
 
 // Initial dummy data
 const initialEvents = [
@@ -550,7 +550,7 @@ function submitInterestedForm(eventId) {
   
   // In a real app, this would send to a backend
   // For demo, we'll store in localStorage and show success
-  const inquiries = JSON.parse(localStorage.getItem('sponsorlink_inquiries') || '[]');
+  const inquiries = JSON.parse(localStorage.getItem('College.connect_inquiries') || '[]');
   inquiries.push({
     id: Date.now().toString(),
     eventId,
@@ -561,7 +561,7 @@ function submitInterestedForm(eventId) {
     message,
     createdAt: new Date().toISOString(),
   });
-  localStorage.setItem('sponsorlink_inquiries', JSON.stringify(inquiries));
+  localStorage.setItem('College.connect_inquiries', JSON.stringify(inquiries));
   
   // Clear form and close dropdown
   document.getElementById(`interested-name-${eventId}`).value = '';
