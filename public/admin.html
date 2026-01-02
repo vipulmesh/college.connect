@@ -39,15 +39,64 @@
     </div>
   </nav>
 
-  <!-- Main Content -->
-  <main class="page">
+  <!-- Login Section -->
+  <div id="login-section" class="login-section">
+    <div class="container" style="max-width: 450px; padding-top: 6rem; padding-bottom: 4rem;">
+      <div class="login-card">
+        <div class="login-header">
+          <div class="login-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h1 class="login-title">Admin Login</h1>
+          <p class="login-description">Enter your credentials to access the admin panel</p>
+        </div>
+        
+        <form id="login-form" class="login-form" onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label class="form-label" for="username">Username</label>
+            <input type="text" class="form-input" id="username" placeholder="Enter username" required>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="password">Password</label>
+            <input type="password" class="form-input" id="password" placeholder="Enter password" required>
+          </div>
+          
+          <div id="login-error" class="login-error" style="display: none;">
+            Invalid username or password
+          </div>
+          
+          <button type="submit" class="btn btn-hero btn-lg btn-block">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg>
+            Sign In
+          </button>
+        </form>
+        
+        <div class="login-footer">
+          <p class="login-hint">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+            Demo credentials: <strong>admin</strong> / <strong>admin123</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Content (Hidden until logged in) -->
+  <main class="page" id="admin-content" style="display: none;">
     <div class="container" style="max-width: 1100px; padding-top: 2rem; padding-bottom: 4rem;">
       
       <!-- Page Header -->
-      <div class="page-header">
-        <div class="page-badge">Admin Only</div>
-        <h1 class="page-title">Admin Panel</h1>
-        <p class="page-description">Review and approve events, monitor platform statistics.</p>
+      <div class="page-header" style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+          <div class="page-badge">Admin Only</div>
+          <h1 class="page-title">Admin Panel</h1>
+          <p class="page-description">Review and approve events, monitor platform statistics.</p>
+        </div>
+        <button class="btn btn-secondary" onclick="handleLogout()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+          Logout
+        </button>
       </div>
 
       <!-- Stats -->
@@ -139,5 +188,78 @@
   </footer>
 
   <script src="script.js"></script>
+  <script>
+    // Admin Authentication
+    const ADMIN_USERNAME = 'admin';
+    const ADMIN_PASSWORD = 'admin123';
+    const AUTH_KEY = 'college_connect_admin_auth';
+    
+    function handleLogin(event) {
+      event.preventDefault();
+      
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const errorDiv = document.getElementById('login-error');
+      
+      if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+        // Store authentication
+        sessionStorage.setItem(AUTH_KEY, 'true');
+        
+        // Show admin content
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('admin-content').style.display = 'block';
+        
+        // Initialize admin page
+        renderAdminPage();
+        
+        // Show success toast
+        showToast('Welcome!', 'Successfully logged in to admin panel.');
+      } else {
+        // Show error
+        errorDiv.style.display = 'block';
+        
+        // Hide error after 3 seconds
+        setTimeout(() => {
+          errorDiv.style.display = 'none';
+        }, 3000);
+      }
+    }
+    
+    function handleLogout() {
+      // Clear authentication
+      sessionStorage.removeItem(AUTH_KEY);
+      
+      // Show login section
+      document.getElementById('login-section').style.display = 'block';
+      document.getElementById('admin-content').style.display = 'none';
+      
+      // Clear form
+      document.getElementById('login-form').reset();
+      
+      // Show toast
+      showToast('Logged Out', 'You have been logged out successfully.');
+    }
+    
+    function checkAuth() {
+      const isAuthenticated = sessionStorage.getItem(AUTH_KEY) === 'true';
+      
+      if (isAuthenticated) {
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('admin-content').style.display = 'block';
+      } else {
+        document.getElementById('login-section').style.display = 'block';
+        document.getElementById('admin-content').style.display = 'none';
+      }
+      
+      return isAuthenticated;
+    }
+    
+    // Check authentication on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      if (checkAuth()) {
+        renderAdminPage();
+      }
+    });
+  </script>
 </body>
 </html>

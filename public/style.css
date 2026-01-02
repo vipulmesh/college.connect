@@ -1611,4 +1611,161 @@ img {
   white-space: nowrap;
   border: 0;
 }
+/* ============================================
+   LOGIN SECTION - Add this to your style.css
+   ============================================ */
+
+.login-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: var(--gradient-hero);
+  position: relative;
+  overflow: hidden;
+}
+
+.login-section::before {
+  content: '';
+  position: absolute;
+  top: -5rem;
+  left: -5rem;
+  width: 20rem;
+  height: 20rem;
+  background: hsla(235, 65%, 50%, 0.08);
+  border-radius: 50%;
+  filter: blur(60px);
+}
+
+.login-section::after {
+  content: '';
+  position: absolute;
+  bottom: -5rem;
+  right: -5rem;
+  width: 24rem;
+  height: 24rem;
+  background: hsla(15, 90%, 60%, 0.08);
+  border-radius: 50%;
+  filter: blur(60px);
+}
+
+.login-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  animation: fadeInUp 0.5s ease;
+}
+
+.login-header {
+  text-align: center;
+  padding: 2rem 2rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.login-icon {
+  width: 64px;
+  height: 64px;
+  background: var(--gradient-primary);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  box-shadow: var(--shadow-glow);
+}
+
+.login-icon svg {
+  width: 32px;
+  height: 32px;
+  color: var(--primary-foreground);
+}
+
+.login-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--foreground);
+  margin-bottom: 0.5rem;
+}
+
+.login-description {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.login-form {
+  padding: 2rem;
+}
+
+.login-error {
+  background: hsla(0, 84%, 60%, 0.1);
+  border: 1px solid hsla(0, 84%, 60%, 0.3);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  color: var(--destructive);
+  text-align: center;
+  animation: shake 0.3s ease;
+}
+
+.login-footer {
+  padding: 1rem 2rem 2rem;
+  text-align: center;
+}
+
+.login-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  background: hsla(235, 65%, 50%, 0.05);
+  border: 1px solid hsla(235, 65%, 50%, 0.1);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+}
+
+.login-hint svg {
+  width: 16px;
+  height: 16px;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.login-hint strong {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* Shake Animation for Login Error */
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .login-form {
+    padding: 1.5rem;
+  }
+  
+  .login-header {
+    padding: 1.5rem 1.5rem 1rem;
+  }
+  
+  .login-footer {
+    padding: 1rem 1.5rem 1.5rem;
+  }
+}
 
