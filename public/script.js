@@ -1,5 +1,5 @@
 /* ============================================
-   college.connect - JavaScript
+   SponsorLink - JavaScript
    College Club Sponsorship Platform
    ============================================ */
 
@@ -7,7 +7,7 @@
 // DATA MANAGEMENT
 // ============================================
 
-const STORAGE_KEY = 'college_connect_events';
+const STORAGE_KEY = 'sponsorlink_events';
 
 // Initial dummy data
 const initialEvents = [
@@ -71,6 +71,7 @@ function getEvents() {
   if (stored) {
     return JSON.parse(stored);
   }
+  // Initialize with dummy data
   localStorage.setItem(STORAGE_KEY, JSON.stringify(initialEvents));
   return initialEvents;
 }
@@ -126,73 +127,6 @@ function getStats() {
     totalFundsRaised: events.reduce((sum, e) => sum + e.sponsorshipRaised, 0),
   };
 }
-// Toggle interested form visibility
-function toggleInterestedForm() {
-  const form = document.getElementById('interested-form');
-  const btn = document.getElementById('interested-btn');
-  
-  if (form.style.display === 'none' || form.style.display === '') {
-    form.style.display = 'block';
-    btn.textContent = 'Hide Form';
-    btn.classList.add('active');
-  } else {
-    form.style.display = 'none';
-    btn.textContent = 'Interested - Connect First';
-    btn.classList.remove('active');
-  }
-}
-
-// Submit interest form
-function submitInterest() {
-  const name = document.getElementById('sponsor-name').value.trim();
-  const email = document.getElementById('sponsor-email').value.trim();
-  const message = document.getElementById('sponsor-message').value.trim();
-  const eventName = document.getElementById('modal-event-name').textContent;
-  
-  // Validation
-  if (!name) {
-    alert('Please enter your name');
-    return;
-  }
-  
-  if (!email) {
-    alert('Please enter your email address');
-    return;
-  }
-  
-  if (!message) {
-    alert('Please enter a message for the club');
-    return;
-  }
-  
-  // In a real app, this would send data to backend
-  console.log('Interest submitted:', {
-    name,
-    email,
-    message,
-    eventName,
-    timestamp: new Date().toISOString()
-  });
-  
-  // Show success message
-  alert(`Thank you ${name}! Your interest has been sent to the club. They will contact you at ${email} shortly.`);
-  
-  // Reset form and close
-  document.getElementById('sponsor-name').value = '';
-  document.getElementById('sponsor-email').value = '';
-  document.getElementById('sponsor-message').value = '';
-  toggleInterestedForm(); // Hide form
-}
-
-// Add this to closeSponsorModal function to reset the form when modal closes
-function closeSponsorModal() {
-  document.getElementById('sponsor-modal').style.display = 'none';
-  // Reset interested form
-  document.getElementById('interested-form').style.display = 'none';
-  document.getElementById('interested-btn').textContent = 'Interested - Connect First';
-  document.getElementById('interested-btn').classList.remove('active');
-}
-
 
 // ============================================
 // ICONS (SVG strings)
@@ -272,7 +206,33 @@ function generateEventCard(event, variant = 'default') {
   
   let actions = '';
   if (variant === 'sponsor' && event.status === 'approved') {
-    actions = `<button class="btn btn-accent btn-block" onclick="openSponsorModal('${event.id}')">Sponsor Now</button>`;
+    actions = `
+      <button class="btn btn-accent btn-block" onclick="openSponsorModal('${event.id}')">Sponsor Now</button>
+      <button class="btn btn-secondary btn-block interested-btn" onclick="toggleInterestedForm('${event.id}')" style="margin-top: 0.5rem;">
+        ${icons.handshake} Interested
+      </button>
+      <div class="interested-form-dropdown" id="interested-form-${event.id}">
+        <div class="interested-form-content">
+          <h4 class="interested-form-title">Contact Club</h4>
+          <p class="interested-form-subtitle">Send a message before sponsoring</p>
+          <div class="form-group">
+            <label class="form-label">Your Name</label>
+            <input type="text" class="form-input" id="interested-name-${event.id}" placeholder="Enter your name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" id="interested-email-${event.id}" placeholder="Enter your email">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message</label>
+            <textarea class="form-textarea" id="interested-message-${event.id}" rows="3" placeholder="Tell the club about your interest..."></textarea>
+          </div>
+          <button class="btn btn-hero btn-block" onclick="submitInterestedForm('${event.id}')">
+            Connect
+          </button>
+        </div>
+      </div>
+    `;
   } else if (variant === 'admin' && event.status === 'pending') {
     actions = `
       <div class="event-actions">
@@ -541,6 +501,77 @@ function confirmSponsorship() {
   }
 }
 
+// INTERESTED FORM FUNCTIONS
+function toggleInterestedForm(eventId) {
+  const form = document.getElementById(`interested-form-${eventId}`);
+  
+  // Close all other open forms first
+  document.querySelectorAll('.interested-form-dropdown.open').forEach(openForm => {
+    if (openForm.id !== `interested-form-${eventId}`) {
+      openForm.classList.remove('open');
+    }
+  });
+  
+  // Toggle the clicked form
+  if (form) {
+    form.classList.toggle('open');
+  }
+}
+
+function submitInterestedForm(eventId) {
+  const name = document.getElementById(`interested-name-${eventId}`).value.trim();
+  const email = document.getElementById(`interested-email-${eventId}`).value.trim();
+  const message = document.getElementById(`interested-message-${eventId}`).value.trim();
+  
+  // Basic validation
+  if (!name) {
+    showToast('Missing Name', 'Please enter your name.', 'error');
+    return;
+  }
+  
+  if (!email) {
+    showToast('Missing Email', 'Please enter your email.', 'error');
+    return;
+  }
+  
+  // Simple email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    showToast('Invalid Email', 'Please enter a valid email address.', 'error');
+    return;
+  }
+  
+  if (!message) {
+    showToast('Missing Message', 'Please enter a message.', 'error');
+    return;
+  }
+  
+  const event = getEvents().find(e => e.id === eventId);
+  
+  // In a real app, this would send to a backend
+  // For demo, we'll store in localStorage and show success
+  const inquiries = JSON.parse(localStorage.getItem('sponsorlink_inquiries') || '[]');
+  inquiries.push({
+    id: Date.now().toString(),
+    eventId,
+    eventName: event ? event.name : 'Unknown Event',
+    clubName: event ? event.clubName : 'Unknown Club',
+    sponsorName: name,
+    sponsorEmail: email,
+    message,
+    createdAt: new Date().toISOString(),
+  });
+  localStorage.setItem('sponsorlink_inquiries', JSON.stringify(inquiries));
+  
+  // Clear form and close dropdown
+  document.getElementById(`interested-name-${eventId}`).value = '';
+  document.getElementById(`interested-email-${eventId}`).value = '';
+  document.getElementById(`interested-message-${eventId}`).value = '';
+  toggleInterestedForm(eventId);
+  
+  showToast('Message Sent!', `Your interest in ${event ? event.name : 'this event'} has been sent to the club.`);
+}
+
 // ADMIN PANEL
 function approveEvent(eventId) {
   updateEventStatus(eventId, 'approved');
@@ -678,5 +709,3 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
-
-
