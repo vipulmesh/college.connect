@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Sponsor Dashboard - Discover events and connect with college audiences through sponsorships.">
-  <title>Sponsor Dashboard - college.connect</title>
+  <title>Sponsor Dashboard - College.connect</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body data-page="sponsor">
@@ -16,7 +16,7 @@
         <div class="logo-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
         </div>
-        <div class="logo-text">college<span>.connect</span></div>
+        <div class="logo-text">Sponsor<span>Link</span></div>
       </a>
       
       <ul class="nav-links">
@@ -74,63 +74,36 @@
   </main>
 
   <!-- Sponsor Modal -->
-  <!-- Sponsor Modal -->
-<div class="modal-overlay" id="sponsor-modal">
-  <div class="modal">
-    <div class="modal-header">
-      <h3 class="modal-title" id="modal-event-name">Sponsor Event</h3>
-      <p class="modal-description" id="modal-club-name">Support this club by contributing to their event.</p>
-    </div>
-    <div class="modal-body">
-      <div class="modal-info">
-        <div class="modal-info-row">
-          <span class="modal-info-label">Goal</span>
-          <span class="modal-info-value" id="modal-goal">$0</span>
-        </div>
-        <div class="modal-info-row">
-          <span class="modal-info-label">Raised</span>
-          <span class="modal-info-value success" id="modal-raised">$0</span>
-        </div>
+  <div class="modal-overlay" id="sponsor-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-event-name">Sponsor Event</h3>
+        <p class="modal-description" id="modal-club-name">Support this club by contributing to their event.</p>
       </div>
-      
-      <div class="form-group">
-        <label class="form-label" for="sponsor-amount">Sponsorship Amount ($)</label>
-        <input type="number" class="form-input" id="sponsor-amount" placeholder="Enter amount">
-      </div>
-      
-      <!-- Interested Button Section -->
-      <div class="interested-section">
-        <button class="btn btn-secondary" id="interested-btn" onclick="toggleInterestedForm()">
-          Interested - Connect First
-        </button>
+      <div class="modal-body">
+        <div class="modal-info">
+          <div class="modal-info-row">
+            <span class="modal-info-label">Goal</span>
+            <span class="modal-info-value" id="modal-goal">$0</span>
+          </div>
+          <div class="modal-info-row">
+            <span class="modal-info-label">Raised</span>
+            <span class="modal-info-value success" id="modal-raised">$0</span>
+          </div>
+        </div>
         
-        <div class="interested-form" id="interested-form" style="display: none;">
-          <div class="form-group">
-            <label class="form-label" for="sponsor-name">Your Name</label>
-            <input type="text" class="form-input" id="sponsor-name" placeholder="Enter your name">
-          </div>
-          
-          <div class="form-group">
-            <label class="form-label" for="sponsor-email">Email Address</label>
-            <input type="email" class="form-input" id="sponsor-email" placeholder="Enter your email">
-          </div>
-          
-          <div class="form-group">
-            <label class="form-label" for="sponsor-message">Message to Club</label>
-            <textarea class="form-input" id="sponsor-message" placeholder="Tell the club about your interest..." rows="3"></textarea>
-          </div>
-          
-          <button class="btn btn-primary" onclick="submitInterest()">Send Connection Request</button>
+        <div class="form-group">
+          <label class="form-label" for="sponsor-amount">Sponsorship Amount ($)</label>
+          <input type="number" class="form-input" id="sponsor-amount" placeholder="Enter amount">
         </div>
-      </div>
-      
-      <div class="modal-actions">
-        <button class="btn btn-secondary" style="flex: 1;" onclick="closeSponsorModal()">Cancel</button>
-        <button class="btn btn-accent" style="flex: 1;" onclick="confirmSponsorship()">Confirm Sponsorship</button>
+        
+        <div class="modal-actions">
+          <button class="btn btn-secondary" style="flex: 1;" onclick="closeSponsorModal()">Cancel</button>
+          <button class="btn btn-accent" style="flex: 1;" onclick="confirmSponsorship()">Confirm Sponsorship</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
   <!-- Footer -->
   <footer class="footer">
@@ -141,7 +114,7 @@
             <div class="logo-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
             </div>
-            <div class="logo-text">college.connect</div>
+            <div class="logo-text">College.connect</div>
           </a>
           <p class="footer-brand-text">Connecting college events with sponsors for meaningful partnerships.</p>
         </div>
@@ -175,7 +148,7 @@
       </div>
       
       <div class="footer-bottom">
-        <p>© 2026 college.connect.</p>
+        <p>© 2026 College.connect. Built for hackathon demo purposes.</p>
       </div>
     </div>
   </footer>
@@ -183,5 +156,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
-
